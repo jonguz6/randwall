@@ -1,0 +1,40 @@
+#!/bin/bash
+bgfill() {
+wget -O /home/j/Pictures/Wallpapers/wallpaper.png https://source.unsplash.com/random/$1;
+feh --bg-fill /home/j/Pictures/Wallpapers/wallpaper.png;
+};
+getres() {
+	reses=$(xrandr | grep '*');
+	res=$(echo $reses | cut -f1 -d' ');
+	return $res;
+}
+while getopts "ghij:k" OPT; do
+	case "$OPT" in
+	g)
+	 shift
+	 bgfill getres;
+	 ;;
+	h)
+	 shift
+	 now=$(date '+%m_%d_%Y-%H:%M:%S');
+	 cp /home/j/Pictures/Wallpapers/wallpaper.png /home/j/Pictures/Wallpapers/$now.png;
+	 rm /home/j/Pictures/Wallpapers/wallpaper.png;
+	 exit 1;
+	 ;;
+	i)
+	 shift
+	 rando=$(find /home/j/Pictures/Wallpapers/*|shuf -n1);
+	 feh --bg-fill $rando;
+	 exit 1;
+	 ;;
+	j)
+	 shift
+	 res=$OPTARG;
+	 shift
+	 bgfill $res;
+	 ;;
+	k)
+	 shift
+	 i3-sensible-terminal -e keywd; 
+	esac
+done
