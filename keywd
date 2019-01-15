@@ -1,0 +1,18 @@
+#!/bin/bash
+OUTPUT="/tmp/input.txt";
+         dialog --title "Keyword" --inputbox "Input a keyword" 8 60 2>$OUTPUT;
+         respose=$?;
+         keywd=$(<$OUTPUT);
+         case $respose in
+                 0)
+                 wget -O /home/j/Pictures/Wallpapers/wallpaper.png https://source.unsplash.com/2560x1080/?$keywd;
+                 feh --bg-fill /home/j/Pictures/Wallpapers/wallpaper.png;
+                 ;;
+                 1)
+                 echo "Cancel pressed";
+                 ;;
+                255)
+                 echo "[ESC] key pressed";
+                esac
+                rm $OUTPUT;
+exit
